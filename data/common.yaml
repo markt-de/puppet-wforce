@@ -103,18 +103,18 @@ wforce::functions:
     return 0, "", "", { defaultReturn=1 }
   reset: |+
     local sdb = getStringStatsDB("OneHourDB")
-    if (string_find(type, "ip"))
+    if (string.find(type, "ip"))
     then
       sdb:twReset(ip)
       -- if you set a non-default prefix for IP addresses, then reset will not necessarily do what you expect
       -- for example if v4Prefix==24 and you reset an IP address it will reset the stats for all IPs in that range
     end
-    if (string_find(type, "login"))
+    if (string.find(type, "login"))
     then
       -- we do not actually set any login-only keys
       sdb:twReset(login)
     end
-    if (string_find(type, "ip") and string_find(type, "login"))
+    if (string.find(type, "ip") and string.find(type, "login"))
     then
       local iplogin = ip:tostring() .. ":" .. login
       sdb:twReset(iplogin)
