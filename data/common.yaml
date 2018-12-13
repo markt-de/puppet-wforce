@@ -26,6 +26,7 @@ wforce::acls:
   - 10.0.0.0/8
 
 wforce::whitelist:
+  - 192.168.0.0/16
   - 10.0.0.0/8
 
 wforce::database_defaults:

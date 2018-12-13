@@ -11,6 +11,7 @@ class wforce (
   Boolean $config_manage,
   String $config_mode,
   String $config_template,
+  Hash $database_defaults,
   Hash $databases,
   Hash $fieldmaps,
   Hash $function_args,
