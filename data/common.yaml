@@ -57,11 +57,8 @@ wforce::fieldmaps:
     diffIPs: 'hll'
     diffPasswords: 'hll'
 
-#wforce::siblings:
-#  - "10.0.0.1:4001:udp"
-#  - "10.0.0.2:4001:udp"
+wforce::siblings: []
 wforce::siblings_address: "%{networking.ip}"
-#wforce::siblings_key: 'must_not_be_empty'
 wforce::siblings_port: 4001
 
 wforce::sync_enable: false

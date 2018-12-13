@@ -61,7 +61,8 @@ Furthermore, a number of simple options are available:
         },
 
         # Replicate changes to db and blacklist to these hosts.
-        siblings => [ "10.99.0.1:4001:udp", "10.99.0.2:4001:udp", "10.99.0.3:4001:udp" ],
+        siblings     => [ "10.99.0.1:4001:udp", "10.99.0.2:4001:udp", "10.99.0.3:4001:udp" ],
+        siblings_key => 'anothersecretpassword',
 
         # On startup, try to replicate databases from the following host.
         sync_enable   => true,
