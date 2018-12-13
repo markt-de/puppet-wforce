@@ -60,13 +60,13 @@ addSibling("<%= $sibling %>")
 
 <% if $wforce::sync_enable { -%>
 -- replicate database(s) from remote wforce server
-addSyncHost("<%= $wforce::sync_host %>:<%if $wforce::sync_port.empty { %><%= $wforce::port %><% } else { %><%= $wforce::sync_port %><% } %>", "<%if $wforce::sync_password.empty { %><%= $wforce::password %><% } else { %><%= $wforce::sync_password %><% } %>", "<%= $wforce::sync_myip %>:<%= $wforce::siblings_port %>", "<%= $wforce::sync_myip %>:<%= $wforce::port %>")
+addSyncHost("<%= $wforce::sync_host %>:<% if $wforce::sync_port.empty { %><%= $wforce::port %><% } else { %><%= $wforce::sync_port %><% } %>", "<% if $wforce::sync_password.empty { %><%= $wforce::password %><% } else { %><%= $wforce::sync_password %><% } %>", "<%= $wforce::sync_myip %>:<%= $wforce::siblings_port %>", "<%= $wforce::sync_myip %>:<%= $wforce::port %>")
 setMinSyncHostUptime(<%= $wforce::sync_uptime %>)
 <% } -%>
 
 <% unless $wforce::functions.empty { -%>
 <%   $wforce::functions.keys.each |$function| { %>
-function <%= $function %>(lt)
+function <%= $function %>(<% if $wforce::function_args[$function] { %><%= $wforce::function_args[$function] %><% } else { %>lt<% } %>)
 <%= $wforce::functions[$function] -%>
 end
 <%   } %>

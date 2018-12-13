@@ -14,6 +14,7 @@ class wforce (
   Hash $databases,
   Hash $fieldmaps,
   Hash $functions,
+  Hash $functions_args,
   String $group,
   String $package_ensure,
   Boolean $package_manage,

@@ -68,6 +68,8 @@ wforce::sync_myip: '%{networking.ip}'
 wforce::sync_port: 8084
 wforce::sync_uptime: 3600
 
+wforce::functions_args:
+  reset: 'type, login, ip'
 wforce::functions:
   report: |+
     if (not lt.success and not lt.policy_reject)
