@@ -1,0 +1,17 @@
+---
+lookup_options:
+  # Do NOT merge ACLs, siblings or whitelists, for default values to
+  # be replaceable.
+  "^wforce::acls":
+    merge:
+      strategy: first
+  "^wforce::siblings":
+    merge:
+      strategy: first
+  "^wforce::whitelist":
+    merge:
+      strategy: first
+  # default to deep merge
+  "^wforce::.*":
+    merge:
+      strategy: deep

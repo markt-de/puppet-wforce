@@ -1,0 +1,128 @@
+---
+wforce::config_file: '/etc/wforce/wforce.conf'
+wforce::config_manage: true
+wforce::config_mode: '0600'
+wforce::config_template: 'wforce/wforce.conf.epp'
+wforce::group: 'wforce'
+wforce::package_ensure: 'present'
+wforce::package_manage: true
+wforce::package_name: 'wforce'
+wforce::repo_manage: false
+wforce::service_ensure: 'running'
+wforce::service_name: 'wforce'
+wforce::service_manage: true
+wforce::user: 'wforce'
+
+wforce::address: '0.0.0.0'
+wforce::port: 8084
+#wforce::password: 'must_not_be_empty'
+
+wforce::socket_address: '0.0.0.0'
+wforce::socket_port: 4004
+
+wforce::acls:
+  - 127.0.0.0/8
+  - 192.168.0.0/16
+  - 10.0.0.0/8
+
+wforce::whitelist:
+  - 10.0.0.0/8
+
+wforce::database_defaults:
+  window_size: 600
+  num_windows: 6
+  max_size: 500000
+  field_map: 'default_field_map'
+  replication: true
+
+wforce::databases:
+  OneHourDB:
+    window_size: 600
+    num_windows: 6
+    max_size: 500000
+    field_map: 'default_field_map'
+    replication: true
+  24HourDB:
+    window_size: 3600
+    num_windows: 24
+    max_size: 500000
+    field_map: 'default_field_map'
+    replication: true
+
+wforce::fieldmaps:
+  default_field_map:
+    countLogins: 'int'
+    countFailedLogins: 'int'
+    diffFailedPasswords: 'hll'
+    diffIPs: 'hll'
+    diffPasswords: 'hll'
+
+#wforce::siblings:
+#  - "10.0.0.1:4001:udp"
+#  - "10.0.0.2:4001:udp"
+wforce::siblings_address: "%{networking.ip}"
+#wforce::siblings_key: 'must_not_be_empty'
+wforce::siblings_port: 4001
+
+wforce::sync_enable: false
+#wforce::sync_host: 'must_not_be_empty'
+wforce::sync_myip: '%{networking.ip}'
+#wforce::sync_password: 'must_not_be_empty'
+wforce::sync_port: 8084
+wforce::sync_uptime: 3600
+
+wforce::functions:
+  report: |+
+    if (not lt.success and not lt.policy_reject)
+    then
+      local sdb = getStringStatsDB("OneHourDB")
+      sdb:twAdd(lt.remote, "diffFailedPasswords", lt.pwhash)
+      addrlogin = lt.remote:tostring() .. ":" .. lt.login
+      sdb:twAdd(addrlogin, "diffFailedPasswords", lt.pwhash)
+    end
+    if (lt.success)
+    then
+      sdb:twAdd(lt.login, "countLogins", 1)
+      sdb:twAdd(lt.remote, "countLogins", 1)
+    end
+  allow: |+
+    local sdb = getStringStatsDB("OneHourDB")
+    if (whitelist:match(lt.remote))
+    then
+      return 0, "", "whitelist match", {}
+    end
+    if(sdb:twGet(lt.remote, "diffFailedPasswords") > 50)
+    then
+      return -1, "", "too many different failed password attempts by IP", { attempts=50 }
+    end
+    local addrlogin = lt.remote:tostring() .. ":" .. lt.login
+    if(sdb:twGet(addrlogin, "diffFailedPasswords") > 3)
+    then
+      return 3, "", "too many different failed password attempts by IP/login", { attempts=3 }
+    end
+    -- you *must* return with 4 arguments
+    return 0, "", "", { defaultReturn=1 }
+  reset: |+
+    local sdb = getStringStatsDB("OneHourDB")
+    if (string_find(type, "ip"))
+    then
+      sdb:twReset(ip)
+      -- if you set a non-default prefix for IP addresses, then reset will not necessarily do what you expect
+      -- for example if v4Prefix==24 and you reset an IP address it will reset the stats for all IPs in that range
+    end
+    if (string_find(type, "login"))
+    then
+      -- we do not actually set any login-only keys
+      sdb:twReset(login)
+    end
+    if (string_find(type, "ip") and string_find(type, "login"))
+    then
+      local iplogin = ip:tostring() .. ":" .. login
+      sdb:twReset(iplogin)
+    end
+    return true
+
+wforce::use_functions:
+  allow: 'allow'
+  report: 'report'
+  reset: 'reset'

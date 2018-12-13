@@ -1,0 +1,86 @@
+# This file is managed by Puppet. DO NOT EDIT.
+
+webserver("<%= $wforce::address %>:<%= $wforce::port %>", "<%= $wforce::password %>")
+controlSocket("<%= $wforce::socket_address %>:<%= $wforce::socket_port %>")
+
+<% unless $wforce::acls.empty { -%>
+-- ACLs
+<%   $wforce::acls.each |$acl| {-%>
+addACL("<%= $acl %>")
+<%   } -%>
+<% } -%>
+
+<% unless $wforce::whitelist.empty { -%>
+-- whitelisted subnets
+local whitelist = newNetmaskGroup()
+<%   $wforce::whitelist.each |$wentry| {-%>
+whitelist:addMask("<%= $wentry %>")
+<%   } -%>
+<% } -%>
+
+<% unless $wforce::fieldmaps.empty { -%>
+-- setup field maps to store different stats
+<%   $wforce::fieldmaps.keys.each |$fieldmap| { -%>
+local <%= $fieldmap %> = {}
+<%     unless $wforce::fieldmaps[$fieldmap].empty { -%>
+<%       $wforce::fieldmaps[$fieldmap].keys.each |$fentry| { -%>
+<%= $fieldmap %>["<%= $fentry %>"] = "<%= $wforce::fieldmaps[$fieldmap][$fentry] %>"
+<%       } -%>
+<%     } -%>
+<%   } -%>
+<% } -%>
+
+<% unless $wforce::databases.empty { -%>
+-- create stats databases
+<%   $wforce::databases.keys.each |$db| { -%>
+newStringStatsDB("<%= $db %>", <% if $wforce::databases[$db]['window_size'].empty { %><%= $wforce::database_defaults['window_size'] %><% } else { %><%= $wforce::databases[$db]['window_size'] %><% } %>, <% if $wforce::databases[$db]['window_size'].empty { %><%= $wforce::database_defaults['num_windows'] %><% } else { %><%= $wforce::databases[$db]['num_windows'] %><% } %>, <% if $wforce::databases[$db]['field_map'].empty { %><%= $wforce::database_defaults['field_map'] %><% } else { %><%= $wforce::databases[$db]['field_map'] %><% } %>)
+config_<%= $db %> = getStringStatsDB("<%= $db %>")
+config_<%= $db %>:twSetMaxSize(<% if $wforce::databases[$db]['max_size'].empty { %><%= $wforce::database_defaults['max_size'] %><% } else { %><%= $wforce::databases[$db]['max_size'] %><% } %>)
+<%     if $wforce::databases[$db]['replication'] == true { -%>
+config_<%= $db %>:twEnableReplication()
+<%     } -%>
+<%     if !$wforce::databases[$db]['v4prefix'].empty { -%>
+config_<%= $db %>:twSetv4Prefix(<%= $wforce::databases[$db]['v4prefix'] %>)
+<%     } -%>
+<%   } -%>
+<% } -%>
+
+<% if $wforce::siblings_key { -%>
+-- replication targets for stats db and blacklist data
+setKey("<%= $wforce::siblings_key %>")
+siblingListener("<%= $wforce::siblings_address %>:<%= $wforce::siblings_port %>")
+<%   unless $wforce::siblings.empty { -%>
+<%     $wforce::siblings.each |$sibling| {-%>
+addSibling("<%= $sibling %>")
+<%     } -%>
+<%   } -%>
+<% } else { -%>
+-- NOTE: replication disabled due to missing $wforce::siblings_key
+<% } -%>
+
+<% if $wforce::sync_enable { -%>
+-- replicate database(s) from remote wforce server
+addSyncHost("<%= $wforce::sync_host %>:<%if $wforce::sync_port.empty { %><%= $wforce::port %><% } else { %><%= $wforce::sync_port %><% } %>", "<%if $wforce::sync_password.empty { %><%= $wforce::password %><% } else { %><%= $wforce::sync_password %><% } %>", "<%= $wforce::sync_myip %>:<%= $wforce::siblings_port %>", "<%= $wforce::sync_myip %>:<%= $wforce::port %>")
+setMinSyncHostUptime(<%= $wforce::sync_uptime %>)
+<% } -%>
+
+<% unless $wforce::functions.empty { -%>
+<%   $wforce::functions.keys.each |$function| { %>
+function <%= $function %>(lt)
+<%= $wforce::functions[$function] -%>
+end
+<%   } %>
+<% } -%>
+
+<% unless $wforce::use_functions.empty { -%>
+-- use specified Lua functions for handling commands
+<%   if $wforce::use_functions['allow'] { -%>
+setAllow(<%= $wforce::use_functions['allow'] %>)
+<%   } -%>
+<%   if $wforce::use_functions['report'] { -%>
+setReport(<%= $wforce::use_functions['report'] %>)
+<%   } -%>
+<%   if $wforce::use_functions['reset'] { -%>
+setReset(<%= $wforce::use_functions['reset'] %>)
+<%   } -%>
+<% } -%>
