@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## Release 0.3.0
 
 ### Changed
 * update OS versions and Puppet version

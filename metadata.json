@@ -1,6 +1,6 @@
 {
   "name": "fraenki-wforce",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Frank Wall",
   "summary": "Anti-Abuse for servers at authentication time",
   "license": "BSD-2-Clause",
