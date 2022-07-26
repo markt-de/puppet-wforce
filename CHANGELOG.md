@@ -7,6 +7,9 @@
 * Update PDK from 1.8.0 to 2.5.0
 * Fix puppet-lint offenses
 
+### Fixed
+* Unit test fix
+
 ## Release 0.2.0
 
 ### Added

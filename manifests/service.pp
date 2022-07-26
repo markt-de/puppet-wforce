@@ -19,7 +19,6 @@ class wforce::service {
       name      => $wforce::service_name,
       enable    => $service_enable,
       hasstatus => true,
-      restart   => $wforce::restart_cmd,
     }
   }
 }
