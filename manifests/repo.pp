@@ -23,26 +23,26 @@ class wforce::repo (
   if $repo_manage {
     case $facts['os']['family'] {
       'Debian': {
-        apt::source { "${module_name}":
-          location => inline_epp($params['apt_location']),
-          release  => $params['apt_release'],
-          repos    => $params['apt_repos'],
+        apt::source { $module_name:
+          location => inline_epp($apt_location),
+          release  => $apt_release,
+          repos    => $apt_repos,
           key      => {
-            'id'     => $params['apt_key'],
-            'server' => $params['apt_server'],
+            'id'     => $apt_key,
+            'server' => $apt_key_server,
           },
           include  => {
-            'src' => $params['apt_include_src'],
+            'src' => $apt_include_src,
           },
         }
       }
       'RedHat': {
-        yumrepo { "${module_name}":
-          descr    => $params['yum_descr'],
-          baseurl  => inline_epp($params['yum_baseurl']),
-          gpgkey   => $params['yum_gpgkey'],
-          enabled  => $params['yum_enabled'],
-          gpgcheck => $params['yum_gpgcheck'],
+        yumrepo { $module_name:
+          descr    => $yum_descr,
+          baseurl  => inline_epp($yum_baseurl),
+          gpgkey   => $yum_gpgkey,
+          enabled  => $yum_enabled,
+          gpgcheck => $yum_gpgcheck,
         }
       }
       default: {

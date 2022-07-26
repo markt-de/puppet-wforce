@@ -42,9 +42,9 @@ class wforce (
   Optional[String] $sync_myip = undef,
   Optional[String] $sync_password = undef,
   Optional[Integer] $sync_port = undef,
-){
-  Class { 'wforce::repo':  }
-  -> Class { 'wforce::package':  }
+) {
+  Class { 'wforce::repo': }
+  -> Class { 'wforce::package': }
   -> Class { 'wforce::config': }
   ~> Class { 'wforce::service': }
 }

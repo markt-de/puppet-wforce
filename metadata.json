@@ -1,13 +1,12 @@
 {
   "name": "fraenki-wforce",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Frank Wall",
   "summary": "Anti-Abuse for servers at authentication time",
   "license": "BSD-2-Clause",
   "source": "https://github.com/fraenki/puppet-wforce",
   "project_page": "https://github.com/fraenki/puppet-wforce",
   "issues_url": "https://github.com/fraenki/puppet-wforce/issues",
-  "tags": ["wforce", "weakforced", "abuse", "policy", "authentication"],
   "dependencies": [
 
   ],
@@ -15,49 +14,49 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "OracleLinux",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "RedHat",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "Scientific",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "Debian",
-      "operatingsystemrelease": [
+        "7",
         "8",
         "9"
       ]
     },
     {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "10",
+        "11"
+      ]
+    },
+    {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "16.04",
-        "18.04"
+        "18.04",
+        "20.04",
+        "22.04"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 5.0.0 < 7.0.0"
+      "version_requirement": ">= 6.0.0 < 8.0.0"
     }
   ],
-  "pdk-version": "1.8.0",
-  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
-  "template-ref": "1.8.0-0-g0d9da00"
+  "tags": [
+    "wforce",
+    "weakforced",
+    "abuse",
+    "policy",
+    "authentication"
+  ],
+  "pdk-version": "2.5.0",
+  "template-url": "pdk-default#2.5.0",
+  "template-ref": "tags/2.5.0-0-g369d483"
 }
