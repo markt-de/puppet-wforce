@@ -1,6 +1,8 @@
 # puppet-wforce
 
-[![Build Status](https://travis-ci.org/fraenki/puppet-wforce.png?branch=master)](https://travis-ci.org/fraenki/puppet-wforce)
+[![Build Status](https://github.com/markt-de/puppet-wforce/actions/workflows/ci.yaml/badge.svg)](https://github.com/markt-de/puppet-wforce/actions/workflows/ci.yaml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/fraenki/wforce.svg)](https://forge.puppetlabs.com/fraenki/wforce)
+[![Puppet Forge](https://img.shields.io/puppetforge/f/fraenki/wforce.svg)](https://forge.puppetlabs.com/fraenki/wforce)
 
 #### Table of Contents
 
