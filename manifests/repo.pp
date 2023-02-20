@@ -1,9 +1,5 @@
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
-#
-# @example
-#   include wforce::repo
+# @summary Setup software repositories
+# @api private
 class wforce::repo (
   Boolean $repo_manage = $wforce::repo_manage,
   # APT
@@ -20,6 +16,8 @@ class wforce::repo (
   Optional[Integer] $yum_gpgcheck = undef,
   Optional[String] $yum_gpgkey = undef,
 ) {
+  assert_private()
+
   if $repo_manage {
     case $facts['os']['family'] {
       'Debian': {

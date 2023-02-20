@@ -1,10 +1,8 @@
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
-#
-# @example
-#   include wforce::service
+# @summary Manage the system service
+# @api private
 class wforce::service {
+  assert_private()
+
   $service_enable = $wforce::service_ensure ? {
     'running' => true,
     'absent'  => false,

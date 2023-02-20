@@ -1,10 +1,8 @@
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
-#
-# @example
-#   include wforce::config
+# @summary Setup configuration files
+# @api private
 class wforce::config {
+  assert_private()
+
   if $wforce::config_manage {
     file { $wforce::config_file:
       ensure  => file,

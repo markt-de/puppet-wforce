@@ -1,6 +1,19 @@
 # Changelog
+All notable changes to this project will be documented in this file.
 
-## Release 0.3.0
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+### [Unreleased]
+
+### Added
+* Add documentation for all parameters
+* Add new dependency: puppetlabs/stdlib
+
+### Changed
+* Convert documentation to Puppet Strings
+
+## [0.3.0] - 2022-07-26
 
 ### Changed
 * update OS versions and Puppet version
@@ -10,7 +23,7 @@
 ### Fixed
 * Unit test fix
 
-## Release 0.2.0
+## [0.2.0] - 2018-12-14
 
 ### Added
 * Support alternative args in Lua functions
@@ -19,7 +32,11 @@
 * Add missing default values
 * Fixes and improvements for default Lua functions
 
-## Release 0.1.0
+## 0.1.0 - 2018-12-14
 
 ### Summary
 Initial release
+
+[Unreleased]: https://github.com/markt-de/puppet-wforce/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/markt-de/puppet-wforce/compare/0.2.0...0.3.0
+[0.2.0]: https://github.com/markt-de/puppet-wforce/compare/0.1.0...0.2.0
