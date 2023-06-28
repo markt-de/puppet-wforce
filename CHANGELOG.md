@@ -12,13 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Add Github Actions
 
 ### Changed
+* Update OS versions and Puppet version
 * Convert documentation to Puppet Strings
 * Update PDK
 
 ## [0.3.0] - 2022-07-26
 
 ### Changed
-* update OS versions and Puppet version
+* Update OS versions and Puppet version
 * Update PDK from 1.8.0 to 2.5.0
 * Fix puppet-lint offenses
 
