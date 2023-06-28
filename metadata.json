@@ -1,12 +1,12 @@
 {
-  "name": "fraenki-wforce",
+  "name": "markt-wforce",
   "version": "0.4.0",
-  "author": "Frank Wall",
+  "author": "markt.de",
   "summary": "Anti-Abuse for servers at authentication time",
   "license": "BSD-2-Clause",
-  "source": "https://github.com/fraenki/puppet-wforce",
-  "project_page": "https://github.com/fraenki/puppet-wforce",
-  "issues_url": "https://github.com/fraenki/puppet-wforce/issues",
+  "source": "https://github.com/markt-de/puppet-wforce",
+  "project_page": "https://github.com/markt-de/puppet-wforce",
+  "issues_url": "https://github.com/markt-de/puppet-wforce/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",

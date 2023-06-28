@@ -1,8 +1,8 @@
 # puppet-wforce
 
 [![Build Status](https://github.com/markt-de/puppet-wforce/actions/workflows/ci.yaml/badge.svg)](https://github.com/markt-de/puppet-wforce/actions/workflows/ci.yaml)
-[![Puppet Forge](https://img.shields.io/puppetforge/v/fraenki/wforce.svg)](https://forge.puppetlabs.com/fraenki/wforce)
-[![Puppet Forge](https://img.shields.io/puppetforge/f/fraenki/wforce.svg)](https://forge.puppetlabs.com/fraenki/wforce)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/markt/wforce.svg)](https://forge.puppetlabs.com/markt/wforce)
+[![Puppet Forge](https://img.shields.io/puppetforge/f/markt/wforce.svg)](https://forge.puppetlabs.com/markt/wforce)
 
 #### Table of Contents
 
