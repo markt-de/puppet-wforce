@@ -23,7 +23,7 @@ This module will setup the weakforced Anti-Abuse server, also known as "wforce".
 
 ## Requirements
 
-* Puppet 5 or higher
+* Puppet 7 or higher
 * Access to wforce binary packages (either through a subscription or custom builds)
 
 ## Usage
